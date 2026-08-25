@@ -498,8 +498,8 @@ bible-commentary-translator/
 3. **Big files.** The CSVs total ~50 MB and are regenerable. `.gitignore` them and document how to rebuild, or use Git LFS if you want them versioned. Do **not** commit them plainly — it permanently bloats every future clone.
 
 4. **Privacy audit before the first push — do this one carefully.** Committed notebook outputs currently contain:
-   - Your Drive folder ID `YOUR_DRIVE_FOLDER_ID` (hardcoded in `Data Curation.ipynb`)
-   - A live Google Doc link `docs.google.com/document/d/YOUR_DOCUMENT_ID/edit` in the Agent notebook output
+   - Your Drive folder ID, hardcoded in `Data Curation.ipynb` — **redacted from the whole history on 2026-08-25**; the notebook now reads `BCT_DRIVE_FOLDER_ID` from the environment
+   - A live Google Doc link in the Agent notebook output — **redacted from the whole history on 2026-08-25**
    - Vietnamese titles of your family's study guides ("LESSON 30", "LESSON 72", …)
 
    None are credentials, and the docs are presumably private. But a public repo publishes the identifiers, and anyone who later gains access can use them. Move IDs to `.env`, and scrub them from any outputs you commit. **If the repo will be public, do this before the first push** — `git filter-repo` afterwards is painful and mirrors keep the old objects.
