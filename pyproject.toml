@@ -1,0 +1,57 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bible-commentary-translator"
+version = "0.1.0"
+description = "EN-VI domain-specialised translation of Bible commentary, grounded in the Vietnamese 1934 scripture text"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "phuclhp1922" }]
+
+# ---------------------------------------------------------------------------
+# Runtime dependencies: scraping, parsing, alignment, Google Docs output.
+#
+# torch / unsloth / trl / transformers are DELIBERATELY ABSENT. Training runs
+# on Colab or Kaggle, which ship their own CUDA-matched torch; pinning it here
+# would fight the platform and would not install on Python 3.13 anyway.
+# The training environment is requirements-colab.txt. This split is intentional
+# -- see README, "Two environments".
+# ---------------------------------------------------------------------------
+dependencies = [
+    "requests>=2.31",
+    "beautifulsoup4>=4.12",
+    "lxml>=5.0",
+    "python-dotenv>=1.0",
+    "pyyaml>=6.0",
+    "tqdm>=4.66",
+    "google-api-python-client>=2.100",
+    "google-auth>=2.23",
+    "google-auth-httplib2>=0.1.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.6",
+    "nbstripout>=0.7",
+]
+eval = [
+    "pandas>=2.1",
+    "rapidfuzz>=3.5",
+]
+
+[project.scripts]
+bct = "bct.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+markers = [
+    "network: hits a live website; skipped by default in CI",
+    "slow: takes more than a few seconds",
+]

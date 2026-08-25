@@ -1,0 +1,59 @@
+# Stage 2: Bible-commentary domain adaptation of the 0.8B.
+#
+# Recovered from the stage-2 notebook. Written down as a file so that a run is
+# described by a config rather than by constants scattered through cells, and
+# so the four runs in PLAN.md 13 differ only in the fields below.
+
+run_name: stage2-domain-0.8b
+base_model: phuclhp1922/qwen3.5_0.8B_translation_merged_16bit
+
+# ---------------------------------------------------------------------------
+# The training set is named explicitly.
+#
+# The notebook read `glob.glob('/content/*.jsonl')` -- whatever happened to be
+# in the Colab session at the time, with no record of what that was. That is
+# the single largest reproducibility hole in the project. A run must state the
+# documents it saw, by manifest, so results stay comparable.
+# ---------------------------------------------------------------------------
+data:
+  manifest: manifests/documents.jsonl   # not written yet
+  splits: [train]
+  manifest_sha256: null                 # stamp at run time; see PLAN.md 13.3
+
+lora:
+  r: 8
+  alpha: 8
+  dropout: 0.0
+  bias: none
+  finetune_language_layers: true
+  finetune_attention_modules: true
+  finetune_mlp_modules: true
+  use_rslora: false
+
+training:
+  max_seq_length: 2048
+  load_in_4bit: true
+  per_device_train_batch_size: 2
+  gradient_accumulation_steps: 4        # effective batch size 8
+  num_train_epochs: 2
+  max_steps: -1
+  learning_rate: 4.0e-5
+  lr_scheduler_type: cosine
+  warmup_steps: 50
+  weight_decay: 0.01
+  optim: adamw_8bit
+  logging_steps: 10
+  seed: 3407
+  report_to: wandb
+
+# The trainer had no eval_dataset and no load_best_model_at_end, so nothing
+# selected a checkpoint. PLAN.md 13.3 requires the validation split to choose
+# it in every run. Add before the 2x2 grid, not during.
+evaluation:
+  eval_split: val
+  load_best_model_at_end: true          # TODO: not wired up yet
+
+export:
+  push_adapter: true
+  push_merged_16bit: true
+  push_gguf: [q8_0]

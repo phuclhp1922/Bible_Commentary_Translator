@@ -1,0 +1,34 @@
+# Training environment -- Colab / Kaggle ONLY. Not installed locally.
+#
+# These pins are lifted from the stage-2 fine-tuning notebook's install cell.
+# torch, trl and transformers were already pinned there; unsloth and
+# unsloth_zoo were installed from git HEAD and are the ones most likely to
+# break a future run, so they are pinned to a commit here instead.
+#
+# Local development installs pyproject.toml instead -- see README.
+
+torch==2.8.0
+triton>=3.3.0
+torchvision
+xformers==0.0.32.post2
+bitsandbytes
+transformers==5.2.0
+trl==0.22.2
+tokenizers
+datasets
+accelerate
+peft
+wandb
+
+# TODO: replace @main with the exact commit SHA of the run you want to
+# reproduce. `pip freeze | grep unsloth` inside a working Colab session
+# gives you the resolved version.
+unsloth[base] @ git+https://github.com/unslothai/unsloth@main
+unsloth_zoo[base] @ git+https://github.com/unslothai/unsloth-zoo@main
+
+# causal_conv1d is supported only on torch==2.8.0
+flash-linear-attention
+causal_conv1d==1.6.0
+
+# COMET evaluation runs on GPU, so it lives here rather than in the local env
+unbabel-comet

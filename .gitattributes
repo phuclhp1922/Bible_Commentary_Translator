@@ -1,0 +1,12 @@
+# Normalise line endings. This repo is edited on Windows and runs on Linux
+# (Colab, Kaggle); without this, every file eventually shows up as wholly
+# rewritten in a diff.
+* text=auto eol=lf
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+
+# Notebooks are stored without outputs. See README, "Notebooks".
+
+*.ipynb filter=nbstripout
+*.zpln filter=nbstripout
+*.ipynb diff=ipynb

@@ -11,11 +11,11 @@
 # ---------------------------------------------------------------------------
 
 # Inference / evaluation dumps
-artifacts/
+/artifacts/
 *.csv
 
 # Local data -- rebuildable from scripts/
-data/
+/data/
 *.sqlite
 *.sqlite3
 *.db
@@ -24,8 +24,8 @@ data/
 *.gguf
 *.safetensors
 *.bin
-outputs/
-qwen_lora/
+/outputs/
+/qwen_lora/
 
 # Secrets -- never commit
 .env
