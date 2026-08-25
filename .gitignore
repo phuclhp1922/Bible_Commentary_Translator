@@ -1,0 +1,57 @@
+# ---------------------------------------------------------------------------
+# The PhoMT inference CSVs are ~49 MB across eleven files. They are NOT cheaply
+# regenerable -- they cost GPU time across six translation systems -- but they
+# are still excluded here, deliberately. A file committed once stays in every
+# future clone forever, and nobody reads five megabytes of rows.
+#
+# Raw dumps live in artifacts/ (local disk + Drive backup).
+# Derived score tables live in results/ as Markdown, and those ARE committed.
+#
+# Rule: commit what is read, not what is produced.
+# ---------------------------------------------------------------------------
+
+# Inference / evaluation dumps
+artifacts/
+*.csv
+
+# Local data -- rebuildable from scripts/
+data/
+*.sqlite
+*.sqlite3
+*.db
+
+# Model weights and exports
+*.gguf
+*.safetensors
+*.bin
+outputs/
+qwen_lora/
+
+# Secrets -- never commit
+.env
+service_account*.json
+credentials*.json
+token.json
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+
+# Tooling caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+wandb/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
