@@ -8,7 +8,10 @@ version = "0.1.0"
 description = "EN-VI domain-specialised translation of Bible commentary, grounded in the Vietnamese 1934 scripture text"
 readme = "README.md"
 requires-python = ">=3.10"
-authors = [{ name = "phuclhp1922" }]
+authors = [{ name = "Nguyen Song Thien Phuc" }]
+license = "MIT"
+license-files = ["LICENSE"]
+keywords = ["machine-translation", "vietnamese", "lora", "domain-adaptation"]
 
 # ---------------------------------------------------------------------------
 # Runtime dependencies: scraping, parsing, alignment, Google Docs output.
@@ -55,3 +58,12 @@ markers = [
     "network: hits a live website; skipped by default in CI",
     "slow: takes more than a few seconds",
 ]
+
+[tool.ruff]
+line-length = 100
+# Historical notebooks are kept as a record of how the project actually
+# happened. They are not held to the linter.
+extend-exclude = ["notebooks", "*.ipynb", ".venv"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
